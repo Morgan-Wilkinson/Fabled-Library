@@ -11,9 +11,9 @@ Some books you can download load are Against the Gods, Emperor’s Domination, S
 
 For users on MacOS simply download the DMG file open it and simply drag the app to the Applications folder. Its as simple as that. No other steps required.
 
-<a href="curl -H 'Authorization: token 62f164f6cfb76eb4bf622f18cd32a0ad3f871267' -H 'Accept: application/vnd.github.v3.raw' -O -L https://github.com/Morgan-Wilkinson/Fabled-Library/blob/master/Source%20Code/dist/Fabled%20Library%201.0.dmg.zip?raw=true" download>Download Fabled Library ver 1.0</a>
+![button](curl -H 'Authorization: token 62f164f6cfb76eb4bf622f18cd32a0ad3f871267' -H 'Accept: application/vnd.github.v3.raw' -O -L https://github.com/Morgan-Wilkinson/Fabled-Library/blob/master/Source%20Code/dist/Fabled%20Library%201.0.dmg.zip?raw=true (Me)
 
-[![button](curl -H 'Authorization: token 62f164f6cfb76eb4bf622f18cd32a0ad3f871267' -H 'Accept: application/vnd.github.v3.raw' -O -L https://github.com/Morgan-Wilkinson/Fabled-Library/blob/master/Source%20Code/dist/Fabled%20Library%201.0.dmg.zip?raw=true](Me)
+[Click me](http://www.google.com){: .btn}
 
 Download the file and double click it to open it.
 ![Download the dmg file and double click it to open it](/Images/1.png)
