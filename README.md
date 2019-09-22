@@ -28,4 +28,4 @@ Currently the Fabled Library is only available for MacOS however it will soon be
 
 
 -----------------------------------------------------------
-<sub><sup><sub><sup>This app was created by Morgan with the artistic advice of Halie W.</sup></sub></sup></sub>
+<sub><sup>This app was created by Morgan with the artistic advice of Halie W.</sup></sub>
