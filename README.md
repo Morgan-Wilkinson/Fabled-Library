@@ -11,7 +11,7 @@ Some books you can download load are Against the Gods, Emperor’s Domination, S
 
 For users on MacOS simply download the DMG file open it and simply drag the app to the Applications folder. Its as simple as that. No other steps required.
 
-<a href="/Fabled Library 1.0.dmg.zip" download>Download Fabled Library ver 1.0</a>
+<a href="Fabled Library 1.0.dmg.zip" download>Download Fabled Library ver 1.0</a>
 
 Download the file and double click it to open it.
 ![Download the dmg file and double click it to open it](/Images/1.png)
