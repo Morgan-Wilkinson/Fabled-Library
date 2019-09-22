@@ -25,3 +25,7 @@ You're done! Go ahead and enjoy the app.
 <a href="Source Code/dist/Fabled Library 1.0.zip" download>Download Fabled Library ver 1.0!</a>
 
 Currently the Fabled Library is only available for MacOS however it will soon be available for Windows and Linux operating systems. Check back here for updates.
+
+
+
+<sub><sup><sub><sup>This app was created by Morgan with the artistic advise of Halie W.</sup></sub></sup></sub>
