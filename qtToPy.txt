@@ -1,0 +1,28 @@
+To transfer QT desgin file to .py file run:
+
+pyuic5 -x filename.ui -o desiredFileName.py
+
+--------------------------------------------------------
+
+To get the desiredFileName imported into your Main.py add in Main.py:
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from WebNovelDownloader import Ui_webNovelDownloader
+.
+.
+.
+
+class WebNovelDownloader(Ui_webNovelDownloader):
+	def __init__(self, dialog):
+		Ui_webNovelDownloader.__init__(self)
+		self.setupUi(dialog)
+
+# Add button functionality here
+
+
+if __name__ == '__main__':
+	app = QtWidgets.QApplication(sys.argv)
+	dialog = QtWidgets.QMainWindow()
+	program = WebNovelDownloader(dialog)
+	dialog.show()
+	sys.exit(app.exec_())

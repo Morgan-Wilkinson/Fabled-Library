@@ -1,0 +1,2 @@
+#!/bin/sh
+create-dmg --volname "Web Novel Downloader" --volicon "/users/morgan/desktop/icon.icns" --window-pos 200 120 --window-size 800 400 --icon-size 100 --icon "/users/morgan/desktop/Web Novel Downloader.app" 200 190 --hide-extension "/users/morgan/desktop/Web Novel Downloader.app" --app-drop-link 600 185 "Web Novel Downloader.dmg" "/users/morgan/desktop/Web Novel Downloader/"
