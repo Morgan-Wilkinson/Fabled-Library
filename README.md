@@ -13,6 +13,9 @@ For users on MacOS simply download the DMG file open it and simply drag the app 
 
 <a href="Fabled Library 1.0.dmg.zip" download>Download Fabled Library ver 1.0</a>
 
+{% include button url="https://github.com/Morgan-Wilkinson/Fabled-Library/blob/master/Fabled%20Library%201.0.dmg.zip" %}
+
+
 Download the file and double click it to open it.
 ![Download the dmg file and double click it to open it](/Images/1.png)
 
