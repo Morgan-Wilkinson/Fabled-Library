@@ -1,0 +1,4 @@
+([('FabledLibrary',
+   '/Users/morgan/Documents/GitHub/Fabled-Library/Source '
+   'Code/dist/FabledLibrary',
+   'EXECUTABLE')],)

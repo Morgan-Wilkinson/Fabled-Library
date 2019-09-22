@@ -1,0 +1,52 @@
+To transfer QT desgin file to .py file run:
+
+pyuic5 -x filename.ui -o desiredFileName.py (Run)
+
+
+To get the desiredFileName imported into your Main.py add in Main.py:
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from filename import Ui_from_class_filename
+.
+.
+.
+
+class filename(Ui_from_class_filename):
+	def __init__(self, dialog):
+		Ui_from_class_filename.__init__(self)
+		self.setupUi(dialog)
+
+# Add button functionality here
+
+
+if __name__ == '__main__':
+	app = QtWidgets.QApplication(sys.argv)
+	dialog = QtWidgets.QMainWindow()
+	program = filename(dialog)
+	dialog.show()
+	sys.exit(app.exec_())
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+To compile and deploy the app source code
+
+If using pyInstaller:
+
+1. Edit .spec file to have info_plist={'NSHighResolutionCapable': 'True'}) and icon.
+2. pyinstaller --onefile --windowed FabledLibrary.spec (Run)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If using py2app:
+
+1. py2applet --make-setup FabledLibrary.py (Run)
+2. Add any files needed to the setup.py file as datafiles
+3. python setup.py py2app (Run)
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+To create the DMG file run:
+
+create-dmg "/Path/To/filename.app"
