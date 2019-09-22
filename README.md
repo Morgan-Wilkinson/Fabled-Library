@@ -27,5 +27,5 @@ You're done! Go ahead and enjoy the app.
 Currently the Fabled Library is only available for MacOS however it will soon be available for Windows and Linux operating systems. Check back here for updates.
 
 
-
+-----------------------------------------------------------
 <sub><sup><sub><sup>This app was created by Morgan with the artistic advice of Halie W.</sup></sub></sup></sub>
