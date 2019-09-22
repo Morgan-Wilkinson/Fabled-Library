@@ -1,2 +1,3 @@
 theme: jekyll-theme-cayman
 includes_dir: ./_includes
+show_downloads: true
