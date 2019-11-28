@@ -1,37 +1,38 @@
 //
-//  ChapterList.swift
+//  ChapterGroups.swift
 //  Fabled-Library
 //
-//  Created by Morgan Wilkinson on 11/9/19.
+//  Created by Morgan Wilkinson on 11/23/19.
 //  Copyright © 2019 Morgan Wilkinson. All rights reserved.
 //
 
 import SwiftUI
 
-struct ChapterList: View {
-    @EnvironmentObject private var userData: UserData
-    var index: Int
-    var novel: Novel
+// Main view
+struct ChapterList<Content: View>: View {
+    let rows: Int
+    let cols: Int
+    let content: (Int, Int) -> Content
     
     var body: some View {
-        HStack {
-            // Create a row that has the chapter and eventually a link to the chapter at which point you can click to bring up the reader for that chapter,
-            // Use the path from the novel index page to grab the chapter
-            
-            Text("Chapter \(index)")
-                .font(.subheadline)
-                .fontWeight(.light)
-                .foregroundColor(Color.black)
-            Spacer()
+        VStack {
+            ForEach(0 ..< rows) { row in
+                if row % 5 == 0{
+                    Divider()
+                }
+                HStack {
+                    ForEach(0 ..< self.cols) { column in
+                        self.content(row, column)
+                    }
+                }
+            }
         }
-        .padding()
-        .frame(width: 150, height: 35)
-        .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
+    }
+
+    init(rows: Int, cols: Int, @ViewBuilder content: @escaping (Int, Int) -> Content) {
+        self.rows = rows
+        self.cols = cols
+        self.content = content
     }
 }
 
-struct ChapterList_Previews: PreviewProvider {
-    static var previews: some View {
-        ChapterList(index: 3, novel: novelData[0])
-    }
-}

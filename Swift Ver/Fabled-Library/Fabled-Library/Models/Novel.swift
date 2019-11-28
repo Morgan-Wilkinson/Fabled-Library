@@ -10,7 +10,6 @@ import SwiftUI
 
 struct Novel: Hashable, Codable, Identifiable {
     var name: String
-    var url: String
     var websiteURL: String
     var relativeURL: String
     var translationGroup: String

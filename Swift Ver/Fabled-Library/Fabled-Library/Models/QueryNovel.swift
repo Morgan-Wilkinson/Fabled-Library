@@ -10,16 +10,6 @@ import Foundation
 import SwiftSoup
 import SwiftUI
 
-extension String{
-    func convertHtml() -> NSAttributedString? {
-        guard let data = data(using: String.Encoding.utf8) else {
-            return nil
-        }
-        return try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
-        documentAttributes: nil)
-    }
-}
-
 // Struct that holds the chapter name and url
 struct ChapterData{
     let title: String
@@ -29,42 +19,41 @@ struct ChapterData{
 }
 
 // A class that holds a variety of functions that query a novels information in a variety of ways
-class QueryNovel{
+class QueryNovel: ObservableObject {
     // Error enum
        enum ParseError: Error {
            case runtimeError(String)
        }
     
-    let websiteURL, relativeNovelURL: String
+    // Constructor for websiteURL and relativeNovelURL
+    var websiteURL, relativeNovelURL: String
+    
     init(websiteURL: String, relativeNovelURL: String) {
         self.websiteURL = websiteURL
         self.relativeNovelURL = relativeNovelURL
     }
     
+    // Will be filled by functions
+    var error: Error?
+    // Get the novel's home page
+    var novelHomePage: String?
     // Get the last chapter currently
     var latestChapter: Int?
     // Mutable instance of an array of ChapterData.
     var chaptersArray: [ChapterData] = []
-    // Dispatch Group to wait for functions to complete
-    let group = DispatchGroup()
-    
-    
-    //*******************************************
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    //*******************************************
-    
     
     // A function that returns a novelHomePage and all of its data. Should always be called at least once
     // before any other functions.
-    func getNovelHomePage(novelHomePageCompletion: @escaping (String?, Error?) -> Void){
-        var novelHomePage: String?
+    func getNovelHomePage(){
+        // Dispatch Group to wait for functions to complete
+        let group = DispatchGroup()
+        
+        // Enter a dispatch group to wait for function tasks to complete
+        group.enter()
         
         // URL
         let homePage = URL(string: self.websiteURL+self.relativeNovelURL)!
-
+        
         // Create a session that we can use for this request
         let session = URLSession(configuration: .default)
 
@@ -72,30 +61,42 @@ class QueryNovel{
         let task = session.dataTask(with: homePage, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
            
            // ensure we did not get an error
-           guard error == nil else { return novelHomePageCompletion(nil, error)}
+           guard error == nil else {
+                self.novelHomePage = nil
+                self.error = error
+                group.leave()
+                return
+            }
            
             // Convert response to an HTTPURLResponse so we can get the status code
             // Ensure we got back a status code of 200 to 299
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
-                      let message = ParseError.runtimeError("Status Code outside 200 - 299 range")
-                      return novelHomePageCompletion(nil, message)
-                    }
+                    self.error = ParseError.runtimeError("Status Code outside 200 - 299 range")
+                    self.novelHomePage = nil
+                    group.leave()
+                    return
+                }
             // Make sure we received the data
             if let receivedData = data {
-                novelHomePage = String(decoding: receivedData, as: UTF8.self)
                 DispatchQueue.main.async {
-                    return novelHomePageCompletion(novelHomePage, nil)
+                    self.novelHomePage = String(decoding: receivedData, as: UTF8.self)
+                    group.leave()
                 }
             }
         })
         task.resume()
+        
+        group.wait()
+        return
     }
     
     
     // A function that returns an Array of struct ChapterData of chapter indices where the title is the chapter name
     // and the relativeURL is the chapter's relative url
     func getAllChaptersURLS(novelHomePage: String) -> Void {
+        // Dispatch Group to wait for functions to complete
+        let group = DispatchGroup()
         // Enter a dispatch group to wait for function tasks to complete
         group.enter()
         
@@ -123,16 +124,18 @@ class QueryNovel{
            } catch {
                return
            }
-            DispatchQueue.main.async {
-                // Explicitly refer to class member group
-                self.group.leave()
-            }
+            // Explicitly refer to class member group
+            group.leave()
         }
+        group.wait()
+        return
     }
     
     
     // A function that returns a single chapter page data based off the data received from getAllNovelChaptersURLS
-    func downloadRawNovelChapter(desiredChapter: Int) -> Void{
+    func downloadOneRawNovelChapter(desiredChapter: Int) -> Void{
+        // Dispatch Group to wait for functions to complete
+        let group = DispatchGroup()
         
         let url = URL(string: (self.websiteURL+self.chaptersArray[desiredChapter].relativeURL))!
         
@@ -152,24 +155,27 @@ class QueryNovel{
             if let mimeType = httpResponse.mimeType, mimeType == "text/html",
                 let receivedData = data,
                 let rawPageDataString = String(data: receivedData, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    self.chaptersArray[desiredChapter].rawChapterData = rawPageDataString
-                    self.group.leave()
-                }
+                self.chaptersArray[desiredChapter].rawChapterData = rawPageDataString
+                // Explicitly refer to class member group
+                group.leave()
             }
         }
         task.resume()
+        group.wait()
+        return
     }
     
     // A function that returns a single chapter page data based off the data received from getAllNovelChaptersURLS
     func downloadAllRawNovelChapters() -> Void{
+        // Dispatch Group to wait for functions to complete
+        let group = DispatchGroup()
         
         for chapter in 0..<self.latestChapter!
         {
-            let url = URL(string: (self.websiteURL+self.chaptersArray[chapter].relativeURL))!
-            
             // Enter a dispatch group to wait for function tasks to complete
             group.enter()
+            let url = URL(string: (self.websiteURL+self.chaptersArray[chapter].relativeURL))!
+            
             
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 if let error = error {
@@ -184,19 +190,23 @@ class QueryNovel{
                 if let mimeType = httpResponse.mimeType, mimeType == "text/html",
                     let receivedData = data,
                     let rawPageDataString = String(data: receivedData, encoding: .utf8) {
-                    DispatchQueue.main.async {
-                        self.chaptersArray[chapter].rawChapterData = rawPageDataString
-                        self.group.leave()
-                    }
+                    self.chaptersArray[chapter].rawChapterData = rawPageDataString
+                    // Explicitly refer to class member group
+                    group.leave()
                 }
             }
             task.resume()
         }
+        group.wait()
+        return
     }
     
     
     // A function that returns a single parsed chapter page data based off the data received from getAllNovelChaptersURLS
-    func parseRawNovelChapter(desiredChapter: Int) -> Void{
+    func parseOneRawNovelChapter(desiredChapter: Int) -> Void{
+        // Dispatch Group to wait for functions to complete
+        let group = DispatchGroup()
+        
         // Enter a dispatch group to wait for function tasks to complete
         group.enter()
         
@@ -214,33 +224,24 @@ class QueryNovel{
                 chapterContent = chapterContent.replacingOccurrences(of: "\n", with: "\n\n")
                 chapterContent = chapterContent.replacingOccurrences(of: "<br>", with: "\n")
                 self.chaptersArray[desiredChapter].parsedChapterData = chapterContent
-                 
-                //*******************************************
-                // This code transforms the HTML into a NSAttributedString - it uses the extenstion of string at the
-                // beginning of the file to do this.
-                // CODE:
-                //********************\\
-                //var test = try rawChapterContentHTML.outerHtml().convertHtml()
-                //print(test!)
-                //test?.rtfdFileWrapper(from: <#T##NSRange#>, documentAttributes: <#T##[NSAttributedString.DocumentAttributeKey : Any]#>)
-                //********************\\
-                //*******************************************
-                
            }
             catch Exception.Error(let type, let message) {
                print("Type: \(type) and Message: \(message)")
            } catch {
                return
            }
-            DispatchQueue.main.async {
-                // Explicitly refer to class member group
-                self.group.leave()
-            }
+            // Explicitly refer to class member group
+            group.leave()
         }
+        group.wait()
+        return
     }
     
     // A function that returns all parsed chapters page data based off the data received from getAllNovelChaptersURLS
     func parseAllRawNovelChapters() -> Void{
+        // Dispatch Group to wait for functions to complete
+        let group = DispatchGroup()
+        
         // Enter a dispatch group to wait for function tasks to complete
         group.enter()
         
@@ -255,29 +256,12 @@ class QueryNovel{
                     
                     let rawChapterContentHTML: Elements = try SwiftSoup.parse(rawChapterHTML).select("div.fr-view")
                     let parsedChapterContentHTML = try rawChapterContentHTML.select("p")
-                    
-                    /*
-                    try parsedChapterContentHTML.select("div.panel.panel-success").remove()
-                    try parsedChapterContentHTML.select("a").remove()
-                    print(try parsedChapterContentHTML.select("div.panel.panel-success").text())
-                    print(try parsedChapterContentHTML.select("a").text())
-                    */
-                    
+    
                     var chapterContent = try parsedChapterContentHTML.html()
                     chapterContent = chapterContent.replacingOccurrences(of: "\n", with: "\n\n")
                     chapterContent = chapterContent.replacingOccurrences(of: "<br>", with: "\n")
                     self.chaptersArray[chapter].parsedChapterData = chapterContent
                      
-                    //*******************************************
-                    // This code transforms the HTML into a NSAttributedString - it uses the extension of string at the
-                    // beginning of the file to do this.
-                    // CODE:
-                    //********************\\
-                    //var test = try rawChapterContentHTML.outerHtml().convertHtml()
-                    //print(test!)
-                    //test?.rtfdFileWrapper(from: <#T##NSRange#>, documentAttributes: <#T##[NSAttributedString.DocumentAttributeKey : Any]#>)
-                    //********************\\
-                    //*******************************************
                 }
             }
             catch Exception.Error(let type, let message) {
@@ -285,32 +269,48 @@ class QueryNovel{
             } catch {
                return
            }
-            DispatchQueue.main.async {
-                // Explicitly refer to class member group
-                self.group.leave()
-            }
+            // Explicitly refer to class member group
+            group.leave()
         }
+        group.wait()
+        return
+    }
+    
+    func starter()
+    {
+        if self.novelHomePage == nil{
+            self.getNovelHomePage()
+            self.getAllChaptersURLS(novelHomePage: self.novelHomePage!)
+        }
+        else if self.chaptersArray.isEmpty{
+            self.getAllChaptersURLS(novelHomePage: self.novelHomePage!)
+        }
+        return
+    }
+    
+    func returnAllParsedChapters() -> [ChapterData]
+    {
+        starter()
+        self.downloadAllRawNovelChapters()
+        self.parseAllRawNovelChapters()
+        return self.chaptersArray
+    }
+    
+    func returnOneParsedChapter(chosenChapter: Int) -> ChapterData
+    {
+        if self.chaptersArray.indices.contains(chosenChapter) == false{
+            starter()
+            self.downloadOneRawNovelChapter(desiredChapter: chosenChapter)
+            self.parseOneRawNovelChapter(desiredChapter: chosenChapter)
+        }
+        
+        return self.chaptersArray[chosenChapter]
     }
 }
 
 /*
 let test = QueryNovel(websiteURL: "https://www.wuxiaworld.com", relativeNovelURL: "/novel/trash-of-the-counts-family")
-
-test.getNovelHomePage(novelHomePageCompletion: { novelHomePage, error in
-    test.getAllChaptersURLS(novelHomePage: novelHomePage!)
-    test.group.notify(queue: .main) {
-        //print(test.chaptersArray)
-        test.downloadAllRawNovelChapters()
-        test.group.notify(queue: .main)
-        {
-            //print(test.chaptersArray[5].rawChapterData!)
-            test.parseAllRawNovelChapters()
-            test.group.notify(queue: .main)
-            {
-                print(test.chaptersArray[8].parsedChapterData!)
-            }
-        }
-    }
-})
- */
+var abbb = test.returnOneParsedChapter(chosenChapter: 6)
+print(abbb.parsedChapterData)
+*/
 
