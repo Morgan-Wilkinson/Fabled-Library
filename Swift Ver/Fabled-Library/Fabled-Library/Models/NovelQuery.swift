@@ -6,20 +6,31 @@
 //  Copyright © 2019 Morgan Wilkinson. All rights reserved.
 //
 
+import CoreData
 import Foundation
 import SwiftSoup
 import SwiftUI
 
-// Struct that holds the chapter name and url
-struct ChapterData{
-    let title: String
-    let relativeURL: String
-    var rawChapterData: String?
-    var parsedChapterData: String?
+// Class that holds the chapter name and url
+public class ChapterData: NSObject {
+    @State var title: String = ""
+    @State var relativeURL: String = ""
+    @State var rawChapterData: String = ""
+    @State var parsedChapterData: String = ""
+    
+    init(title: String, relativeURL: String){
+        self.title = title
+        self.relativeURL = relativeURL
+    }
 }
 
 // A class that holds a variety of functions that query a novels information in a variety of ways
-class QueryNovel: ObservableObject {
+public class NovelQuery: Identifiable, ObservableObject {
+    
+    // Core Data
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: Books.entity(), sortDescriptors: []) var book: FetchedResults<Books>
+    
     // Error enum
        enum ParseError: Error {
            case runtimeError(String)
@@ -36,9 +47,9 @@ class QueryNovel: ObservableObject {
     // Will be filled by functions
     var error: Error?
     // Get the novel's home page
-    var novelHomePage: String?
+    @State var novelHomePage: String = ""
     // Get the last chapter currently
-    var latestChapter: Int?
+    @State var latestChapter: Int16 = 0
     // Mutable instance of an array of ChapterData.
     var chaptersArray: [ChapterData] = []
     
@@ -62,7 +73,6 @@ class QueryNovel: ObservableObject {
            
            // ensure we did not get an error
            guard error == nil else {
-                self.novelHomePage = nil
                 self.error = error
                 group.leave()
                 return
@@ -73,7 +83,6 @@ class QueryNovel: ObservableObject {
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
                     self.error = ParseError.runtimeError("Status Code outside 200 - 299 range")
-                    self.novelHomePage = nil
                     group.leave()
                     return
                 }
@@ -114,10 +123,10 @@ class QueryNovel: ObservableObject {
                     for chapterHTML in chaptersInVolume
                     {
                         // maybe add some guard statements
-                        self.chaptersArray.append(ChapterData(title: (try chapterHTML.text()), relativeURL: (try chapterHTML.attr("href")), rawChapterData: nil, parsedChapterData: nil))
+                        self.chaptersArray.append(ChapterData(title: (try chapterHTML.text()), relativeURL: (try chapterHTML.attr("href"))))
                     }
                 }
-                self.latestChapter = self.chaptersArray.count
+                self.latestChapter = Int16(self.chaptersArray.count)
            }
             catch Exception.Error(let type, let message) {
                print("Type: \(type) and Message: \(message)")
@@ -170,7 +179,7 @@ class QueryNovel: ObservableObject {
         // Dispatch Group to wait for functions to complete
         let group = DispatchGroup()
         
-        for chapter in 0..<self.latestChapter!
+        for chapter in 0..<Int(self.latestChapter)
         {
             // Enter a dispatch group to wait for function tasks to complete
             group.enter()
@@ -215,7 +224,7 @@ class QueryNovel: ObservableObject {
             // Do all parsing of the document for the desired info.
             do {
                 // Retrieve the panel where all the chapters are located.
-                let rawChapterHTML: String = self.chaptersArray[desiredChapter].rawChapterData!
+                let rawChapterHTML: String = self.chaptersArray[desiredChapter].rawChapterData
                 
                 let rawChapterContentHTML: Elements = try SwiftSoup.parse(rawChapterHTML).select("div.fr-view")
                 let parsedChapterContentHTML = try rawChapterContentHTML.select("p")
@@ -234,6 +243,14 @@ class QueryNovel: ObservableObject {
             group.leave()
         }
         group.wait()
+        
+        // Core Data
+        let bookAdder = Books(context: self.moc)
+        bookAdder.novelHomePage = self.novelHomePage
+        bookAdder.latestChapter = self.latestChapter
+        bookAdder.chapters![desiredChapter] = self.chaptersArray[desiredChapter]
+        try? self.moc.save()
+        
         return
     }
     
@@ -249,10 +266,10 @@ class QueryNovel: ObservableObject {
         DispatchQueue.global(qos: .background).async {
             // Do all parsing of the document for the desired info.
             do {
-                for chapter in 0..<self.latestChapter!
+                for chapter in 0..<Int(self.latestChapter)
                 {
                     // Retrieve the panel where all the chapters are located.
-                    let rawChapterHTML: String = self.chaptersArray[chapter].rawChapterData!
+                    let rawChapterHTML: String = self.chaptersArray[chapter].rawChapterData
                     
                     let rawChapterContentHTML: Elements = try SwiftSoup.parse(rawChapterHTML).select("div.fr-view")
                     let parsedChapterContentHTML = try rawChapterContentHTML.select("p")
@@ -273,17 +290,26 @@ class QueryNovel: ObservableObject {
             group.leave()
         }
         group.wait()
+        
+        // Core Data
+        let bookAdder = Books(context: self.moc)
+        bookAdder.novelHomePage = self.novelHomePage
+        bookAdder.latestChapter = self.latestChapter
+        bookAdder.chapters = self.chaptersArray
+        try? self.moc.save()
+       
         return
     }
     
     func starter()
     {
-        if self.novelHomePage == nil{
+        // Change "" later
+        if self.novelHomePage == ""{
             self.getNovelHomePage()
-            self.getAllChaptersURLS(novelHomePage: self.novelHomePage!)
+            self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
         }
         else if self.chaptersArray.isEmpty{
-            self.getAllChaptersURLS(novelHomePage: self.novelHomePage!)
+            self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
         }
         return
     }
@@ -307,10 +333,3 @@ class QueryNovel: ObservableObject {
         return self.chaptersArray[chosenChapter]
     }
 }
-
-/*
-let test = QueryNovel(websiteURL: "https://www.wuxiaworld.com", relativeNovelURL: "/novel/trash-of-the-counts-family")
-var abbb = test.returnOneParsedChapter(chosenChapter: 6)
-print(abbb.parsedChapterData)
-*/
-

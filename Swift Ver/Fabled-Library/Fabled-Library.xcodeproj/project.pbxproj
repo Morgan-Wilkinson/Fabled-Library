@@ -11,13 +11,15 @@
 		900500C723775863002CE3C5 /* ChapterListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900500C623775863002CE3C5 /* ChapterListElement.swift */; };
 		900500C923775FD4002CE3C5 /* NovelCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900500C823775FD4002CE3C5 /* NovelCover.swift */; };
 		900500CB237762BA002CE3C5 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900500CA237762BA002CE3C5 /* UserData.swift */; };
-		902E8D96238F66B600D247B4 /* Novels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 902E8D94238F66B600D247B4 /* Novels.xcdatamodeld */; };
 		9097D6C223897BFD0099FE6E /* BookGlance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9097D6C123897BFD0099FE6E /* BookGlance.swift */; };
 		9097D6C423897E6C0099FE6E /* BookSynopsis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9097D6C323897E6C0099FE6E /* BookSynopsis.swift */; };
 		9097D6C6238986F20099FE6E /* ChapterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9097D6C5238986F20099FE6E /* ChapterList.swift */; };
-		90D8CE36237FCBF300ED3504 /* QueryNovel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D8CE35237FCBF300ED3504 /* QueryNovel.swift */; };
+		90B0DE932391DBE0007022D0 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B0DE922391DBE0007022D0 /* SideBar.swift */; };
+		90B0DE952391E49E007022D0 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B0DE942391E49E007022D0 /* Test.swift */; };
+		90B0DE98239212BB007022D0 /* Fabled-Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90B0DE96239212BB007022D0 /* Fabled-Library.xcdatamodeld */; };
+		90D8CE36237FCBF300ED3504 /* NovelQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D8CE35237FCBF300ED3504 /* NovelQuery.swift */; };
 		90DB7A7323765E5000EBD385 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DB7A7223765E5000EBD385 /* AppDelegate.swift */; };
-		90DB7A7523765E5000EBD385 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DB7A7423765E5000EBD385 /* ContentView.swift */; };
+		90DB7A7523765E5000EBD385 /* BookShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DB7A7423765E5000EBD385 /* BookShelf.swift */; };
 		90DB7A7723765E5100EBD385 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90DB7A7623765E5100EBD385 /* Assets.xcassets */; };
 		90DB7A7A23765E5100EBD385 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90DB7A7923765E5100EBD385 /* Preview Assets.xcassets */; };
 		90DB7A7D23765E5100EBD385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90DB7A7B23765E5100EBD385 /* Main.storyboard */; };
@@ -37,15 +39,16 @@
 		900500C623775863002CE3C5 /* ChapterListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListElement.swift; sourceTree = "<group>"; };
 		900500C823775FD4002CE3C5 /* NovelCover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovelCover.swift; sourceTree = "<group>"; };
 		900500CA237762BA002CE3C5 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		902E8D95238F66B600D247B4 /* Novels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Novels.xcdatamodel; sourceTree = "<group>"; };
 		9097D6C123897BFD0099FE6E /* BookGlance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookGlance.swift; sourceTree = "<group>"; };
 		9097D6C323897E6C0099FE6E /* BookSynopsis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSynopsis.swift; sourceTree = "<group>"; };
 		9097D6C5238986F20099FE6E /* ChapterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterList.swift; sourceTree = "<group>"; };
-		9097D6CA2389CF2A0099FE6E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = "../../../../../../Library/Autosave Information/MyPlayground.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		90D8CE35237FCBF300ED3504 /* QueryNovel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryNovel.swift; sourceTree = "<group>"; };
+		90B0DE922391DBE0007022D0 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
+		90B0DE942391E49E007022D0 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		90B0DE97239212BB007022D0 /* Fabled-Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fabled-Library.xcdatamodel"; sourceTree = "<group>"; };
+		90D8CE35237FCBF300ED3504 /* NovelQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovelQuery.swift; sourceTree = "<group>"; };
 		90DB7A6F23765E5000EBD385 /* Fabled-Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fabled-Library.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90DB7A7223765E5000EBD385 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		90DB7A7423765E5000EBD385 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		90DB7A7423765E5000EBD385 /* BookShelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookShelf.swift; sourceTree = "<group>"; };
 		90DB7A7623765E5100EBD385 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		90DB7A7923765E5100EBD385 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		90DB7A7C23765E5100EBD385 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -85,12 +88,14 @@
 		900500C323775841002CE3C5 /* Supporting Views */ = {
 			isa = PBXGroup;
 			children = (
-				900500C823775FD4002CE3C5 /* NovelCover.swift */,
-				900500C623775863002CE3C5 /* ChapterListElement.swift */,
-				90DB7A95237663F500EBD385 /* NovelRow.swift */,
 				9097D6C123897BFD0099FE6E /* BookGlance.swift */,
 				9097D6C323897E6C0099FE6E /* BookSynopsis.swift */,
 				9097D6C5238986F20099FE6E /* ChapterList.swift */,
+				900500C623775863002CE3C5 /* ChapterListElement.swift */,
+				900500C823775FD4002CE3C5 /* NovelCover.swift */,
+				90DB7A95237663F500EBD385 /* NovelRow.swift */,
+				90B0DE922391DBE0007022D0 /* SideBar.swift */,
+				90B0DE942391E49E007022D0 /* Test.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -99,8 +104,22 @@
 			isa = PBXGroup;
 			children = (
 				90DB7A932376638100EBD385 /* NovelDetail.swift */,
+				90DB7A7423765E5000EBD385 /* BookShelf.swift */,
 			);
 			path = "Main Views";
+			sourceTree = "<group>";
+		};
+		90B0DE912391DB7E007022D0 /* System Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90DB7A7623765E5100EBD385 /* Assets.xcassets */,
+				90DB7A7223765E5000EBD385 /* AppDelegate.swift */,
+				90B0DE96239212BB007022D0 /* Fabled-Library.xcdatamodeld */,
+				90DB7A7B23765E5100EBD385 /* Main.storyboard */,
+				90DB7A7E23765E5100EBD385 /* Info.plist */,
+				90DB7A7F23765E5100EBD385 /* Fabled_Library.entitlements */,
+			);
+			path = "System Resources";
 			sourceTree = "<group>";
 		};
 		90DB7A6623765E5000EBD385 = {
@@ -125,18 +144,11 @@
 		90DB7A7123765E5000EBD385 /* Fabled-Library */ = {
 			isa = PBXGroup;
 			children = (
-				902E8D94238F66B600D247B4 /* Novels.xcdatamodeld */,
-				9097D6CA2389CF2A0099FE6E /* MyPlayground.playground */,
+				90B0DE912391DB7E007022D0 /* System Resources */,
 				90DB7A8523765E5E00EBD385 /* Resources */,
 				900500C323775841002CE3C5 /* Supporting Views */,
 				90DB7A8C23765EE900EBD385 /* Models */,
 				9097D6CB2389E7730099FE6E /* Main Views */,
-				90DB7A7223765E5000EBD385 /* AppDelegate.swift */,
-				90DB7A7423765E5000EBD385 /* ContentView.swift */,
-				90DB7A7623765E5100EBD385 /* Assets.xcassets */,
-				90DB7A7B23765E5100EBD385 /* Main.storyboard */,
-				90DB7A7E23765E5100EBD385 /* Info.plist */,
-				90DB7A7F23765E5100EBD385 /* Fabled_Library.entitlements */,
 				90DB7A7823765E5100EBD385 /* Preview Content */,
 			);
 			path = "Fabled-Library";
@@ -165,7 +177,7 @@
 			children = (
 				90DB7A8D23765EFB00EBD385 /* Novel.swift */,
 				90DB7A8F2376600200EBD385 /* Data.swift */,
-				90D8CE35237FCBF300ED3504 /* QueryNovel.swift */,
+				90D8CE35237FCBF300ED3504 /* NovelQuery.swift */,
 				900500CA237762BA002CE3C5 /* UserData.swift */,
 			);
 			path = Models;
@@ -299,17 +311,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				902E8D96238F66B600D247B4 /* Novels.xcdatamodeld in Sources */,
 				90DB7A8E23765EFB00EBD385 /* Novel.swift in Sources */,
 				9097D6C223897BFD0099FE6E /* BookGlance.swift in Sources */,
 				90DB7A96237663F500EBD385 /* NovelRow.swift in Sources */,
-				90DB7A7523765E5000EBD385 /* ContentView.swift in Sources */,
+				90DB7A7523765E5000EBD385 /* BookShelf.swift in Sources */,
+				90B0DE952391E49E007022D0 /* Test.swift in Sources */,
 				900500CB237762BA002CE3C5 /* UserData.swift in Sources */,
 				90DB7A7323765E5000EBD385 /* AppDelegate.swift in Sources */,
 				90DB7A902376600200EBD385 /* Data.swift in Sources */,
 				90DB7A942376638100EBD385 /* NovelDetail.swift in Sources */,
+				90B0DE98239212BB007022D0 /* Fabled-Library.xcdatamodeld in Sources */,
 				9097D6C423897E6C0099FE6E /* BookSynopsis.swift in Sources */,
-				90D8CE36237FCBF300ED3504 /* QueryNovel.swift in Sources */,
+				90B0DE932391DBE0007022D0 /* SideBar.swift in Sources */,
+				90D8CE36237FCBF300ED3504 /* NovelQuery.swift in Sources */,
 				9097D6C6238986F20099FE6E /* ChapterList.swift in Sources */,
 				900500C923775FD4002CE3C5 /* NovelCover.swift in Sources */,
 				900500C723775863002CE3C5 /* ChapterListElement.swift in Sources */,
@@ -448,14 +462,14 @@
 			baseConfigurationReference = FB23F39728C1009F44BA277B /* Pods-Fabled-Library.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Fabled-Library/Fabled_Library.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Fabled-Library/System Resources/Fabled_Library.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Fabled-Library/Preview Content\"";
 				DEVELOPMENT_TEAM = NR2242L85P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Fabled-Library/Info.plist";
+				INFOPLIST_FILE = "Fabled-Library/System Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -472,14 +486,14 @@
 			baseConfigurationReference = 67D66F13086B8973B527D74E /* Pods-Fabled-Library.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Fabled-Library/Fabled_Library.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Fabled-Library/System Resources/Fabled_Library.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Fabled-Library/Preview Content\"";
 				DEVELOPMENT_TEAM = NR2242L85P;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Fabled-Library/Info.plist";
+				INFOPLIST_FILE = "Fabled-Library/System Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -515,14 +529,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		902E8D94238F66B600D247B4 /* Novels.xcdatamodeld */ = {
+		90B0DE96239212BB007022D0 /* Fabled-Library.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				902E8D95238F66B600D247B4 /* Novels.xcdatamodel */,
+				90B0DE97239212BB007022D0 /* Fabled-Library.xcdatamodel */,
 			);
-			currentVersion = 902E8D95238F66B600D247B4 /* Novels.xcdatamodel */;
-			name = Novels.xcdatamodeld;
-			path = ../Novels.xcdatamodeld;
+			currentVersion = 90B0DE97239212BB007022D0 /* Fabled-Library.xcdatamodel */;
+			path = "Fabled-Library.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

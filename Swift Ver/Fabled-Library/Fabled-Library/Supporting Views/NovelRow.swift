@@ -17,7 +17,7 @@ struct NovelRow: View {
                 .resizable()
                 .frame(width: 50, height: 50)
             Text(verbatim: novel.name)
-            Spacer()
+            //Spacer()
         }
     }
 }

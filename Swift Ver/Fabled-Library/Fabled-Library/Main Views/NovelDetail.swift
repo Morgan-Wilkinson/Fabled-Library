@@ -6,14 +6,18 @@
 //  Copyright © 2019 Morgan Wilkinson. All rights reserved.
 //
 
+import CoreData
 import SwiftUI
 
 struct NovelDetail: View {
     var novelData: Novel
-
-
+    // Core Data
+    @Environment(\.managedObjectContext) var moc
+    
     var body: some View {
-        VStack(){
+        var test = NovelQuery(websiteURL: novelData.websiteURL, relativeNovelURL: novelData.relativeURL)
+        //.environment(\.managedObjectContext, self.moc)
+        return VStack(){
             
             // Novel Data
             BookGlance(novel: novelData)
@@ -22,24 +26,12 @@ struct NovelDetail: View {
             BookSynopsis(novel: novelData)
             
             //ScrollView {
-                // Chapter List Scroll View
-              //  .onAppear {
-                    ////ERRROORRRR
-                  // var test = self.queryNovel(novel: self.novelData)
-                    
-                   // test.getNovelHomePage()
-                    //Text(QueryNovel.novelHomePage ?? "hi")
-                        //.frame(width: 150, height: 35)
-                    //let numChapters = test.chaptersArray.count
-                    //let (numRows, numCols) = self.rowsColsGroupingCal(numberOfChapter: numChapters)
-                    //ChapterList(rows: numRows, cols: numCols) { row, col in
-                    //   Text("\(test.chaptersArray[row * numChapters + col].title)")
-                    //}
-               //}
-           // }
-            
-           // ChapterList(numChapters: self.numChapters, numRows: 5, numCols: 2) { row, col in
-                //Text("\(query.chaptersArray[row * numChapters + numCols])")
+            //    ForEach(book.chapters, id: \.self) { chapter
+            //        Text("\(chapter.title)")
+            //    }
+            //}
+
+           
         }
     }
     
@@ -52,20 +44,24 @@ struct NovelDetail: View {
         rows.round(.up)
         return (Int(rows), Int(columns))
     }
-    
-    func queryNovel(novel: Novel) -> QueryNovel
+   
+    /*
+    func queryNovel(novel: Novel) -> NovelData
     {
-        let query: QueryNovel = QueryNovel(websiteURL: novel.websiteURL, relativeNovelURL: novel.relativeURL)
+        let query: NovelData = NovelData(websiteURL: novel.websiteURL, relativeNovelURL: novel.relativeURL)
         //query.starter()
         //let numChapters = query.chaptersArray.count
         //let (numRows, numCols) = rowsColsGroupingCal(numberOfChapter: numChapters)
         return query
     }
+     */
+
 }
 
 struct NovelDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NovelDetail(novelData: novelData[0])
+        NovelDetail(novelData: novelData[0]).environmentObject(NovelQuery(websiteURL: novelData[0].websiteURL, relativeNovelURL: novelData[0].relativeURL))
     }
 }
+
 
