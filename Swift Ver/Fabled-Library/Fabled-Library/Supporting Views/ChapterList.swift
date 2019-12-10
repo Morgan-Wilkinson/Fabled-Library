@@ -15,10 +15,12 @@ struct ChapterList: View {
     let columnNumber: Int = 2
     
     var body: some View {
-        ScrollView {
+        VStack(){
             NavigationView {
-                HelperListView(rows: chapters.count/rowNumber, cols: columnNumber) { row, column in
-                    ChapterListElement(chapter: self.chapters[row * self.rowNumber + column])
+                List {
+                    HelperListView(rows: chapters.count/rowNumber, cols: columnNumber) { row, column in
+                        ChapterListElement(chapter: self.chapters[row * self.rowNumber + column])
+                    }
                 }
             }
         }

@@ -13,13 +13,10 @@ struct BookSynopsis: View {
     var body: some View {
         // Novel Synopsis Data
         VStack(alignment: .leading){
-           ScrollView {
-               Text(novel.synopsis)
-                   .font(.body)
-                   .multilineTextAlignment(.leading)
-                   .padding([.leading, .bottom, .trailing])
-           }
-           .padding([.leading, .bottom])
+           Text(novel.synopsis)
+               .font(.body)
+               .multilineTextAlignment(.leading)
+               .padding([.leading, .bottom, .trailing])
         }
         .frame(maxWidth: .infinity, maxHeight: 150, alignment: .center)
     }

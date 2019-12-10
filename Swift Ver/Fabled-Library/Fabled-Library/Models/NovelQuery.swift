@@ -75,16 +75,16 @@ extension NovelQuery {
         
         // Create a session that we can use for this request
         let session = URLSession(configuration: .default)
-        print(1)
+
         // Create a task that will be responsible for downloading the index page.
         let task = session.dataTask(with: homePage, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
-           print(2)
+           
            // ensure we did not get an error
            guard error == nil else {
                 DispatchQueue.main.async {
                     self.error = error
                     group.leave()
-                    print(3)
+                    
                 }
                 return
             }
@@ -95,27 +95,25 @@ extension NovelQuery {
                 (200...299).contains(httpResponse.statusCode) else {
                     self.error = ParseError.runtimeError("Status Code outside 200 - 299 range")
                     group.leave()
-                    print(4)
+                    
                     return
                 }
             // Make sure we received the data
-            print(00)
+            
             if let receivedData = data {
-                print(876)
+                
                 //DispatchQueue.main.async {
-                    print(5)
+                    
                     self.novelHomePage = String(decoding: receivedData, as: UTF8.self)
                     //print("\(self.novelHomePage).")
                     //print(String(decoding: receivedData, as: UTF8.self))
                     group.leave()
                 //}
-                print(9)
             }
         })
         task.resume()
         
         group.wait()
-        print(87000)
         return
     }
     

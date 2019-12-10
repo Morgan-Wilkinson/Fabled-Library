@@ -13,18 +13,16 @@ struct ChapterListElement: View {
     var chapter: ChapterData
     
     var body: some View {
-        HStack() {
-            // Fix navigation button style to match hstack
-            
-           NavigationLink(destination: Reader(chapterText: chapter.parsedChapterData)){
-                    Text("\(chapter.title)")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                        .foregroundColor(Color.black)
-            }
-            
-        }
-        
+       NavigationLink(destination: Reader(chapterText: chapter.parsedChapterData)){
+                Text("\(chapter.title)")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundColor(Color.black)
+       }
+       .buttonStyle(PlainButtonStyle())
+       .frame(maxWidth: 300, maxHeight: 150, alignment: .leading)
+       .padding()
+       .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
     }
 }
 
