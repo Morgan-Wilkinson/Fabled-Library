@@ -19,9 +19,9 @@ struct BookSynopsis: View {
                    .multilineTextAlignment(.leading)
                    .padding([.leading, .bottom, .trailing])
            }
-           .padding([.leading, .bottom, .trailing])
+           .padding([.leading, .bottom])
         }
-        .frame(minWidth: 800, idealWidth: 1000, maxWidth: 2500, minHeight: 100, idealHeight: 100, maxHeight: 100, alignment: .center)
+        .frame(maxWidth: .infinity, maxHeight: 150, alignment: .center)
     }
 }
 

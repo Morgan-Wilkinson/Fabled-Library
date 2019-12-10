@@ -15,23 +15,21 @@ struct NovelDetail: View {
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
-        var test = NovelQuery(websiteURL: novelData.websiteURL, relativeNovelURL: novelData.relativeURL)
-        //.environment(\.managedObjectContext, self.moc)
+        let novel = NovelQuery(websiteURL: novelData.websiteURL, relativeNovelURL: novelData.relativeURL)
+        novel.getNovelHomePage()
+        novel.getAllChaptersURLS(novelHomePage: novel.novelHomePage)
+        
+        
         return VStack(){
             
             // Novel Data
-            BookGlance(novel: novelData)
+            BookGlance(novel: novelData, latestChapter: novel.latestChapter)
             
             // Novel Synopsis Scroll View
             BookSynopsis(novel: novelData)
             
-            //ScrollView {
-            //    ForEach(book.chapters, id: \.self) { chapter
-            //        Text("\(chapter.title)")
-            //    }
-            //}
-
-           
+            // Scroll and navigation view of the chapters
+            ChapterList(chapters: novel.chaptersArray)
         }
     }
     
@@ -44,18 +42,6 @@ struct NovelDetail: View {
         rows.round(.up)
         return (Int(rows), Int(columns))
     }
-   
-    /*
-    func queryNovel(novel: Novel) -> NovelData
-    {
-        let query: NovelData = NovelData(websiteURL: novel.websiteURL, relativeNovelURL: novel.relativeURL)
-        //query.starter()
-        //let numChapters = query.chaptersArray.count
-        //let (numRows, numCols) = rowsColsGroupingCal(numberOfChapter: numChapters)
-        return query
-    }
-     */
-
 }
 
 struct NovelDetail_Previews: PreviewProvider {

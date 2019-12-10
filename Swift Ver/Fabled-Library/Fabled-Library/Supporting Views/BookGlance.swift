@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BookGlance: View {
     var novel: Novel
+    var latestChapter: Int16
     
     var body: some View {
         VStack(alignment: .leading){
@@ -41,7 +42,7 @@ struct BookGlance: View {
                             
                     }
                     // Novel Translator
-                    Text("\nLatest Chapter: PLACEHOLDER")
+                    Text("\nLatest Chapter: \(latestChapter)")
                         .fontWeight(.bold)
                         .font(.callout)
                 }
@@ -54,6 +55,6 @@ struct BookGlance: View {
 
 struct BookAuthor_Previews: PreviewProvider {
     static var previews: some View {
-        BookGlance(novel: novelData[0])
+        BookGlance(novel: novelData[0], latestChapter: 16)
     }
 }

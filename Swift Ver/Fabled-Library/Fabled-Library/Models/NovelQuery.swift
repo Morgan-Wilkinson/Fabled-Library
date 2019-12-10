@@ -11,12 +11,17 @@ import Foundation
 import SwiftSoup
 import SwiftUI
 
+//                                    //
+// Make functions protocols of class //
+// cant mutate self
+
+
 // Class that holds the chapter name and url
 public class ChapterData: NSObject {
-    @State var title: String = ""
-    @State var relativeURL: String = ""
-    @State var rawChapterData: String = ""
-    @State var parsedChapterData: String = ""
+    var title: String = ""
+    var relativeURL: String = ""
+    var rawChapterData: String = ""
+    var parsedChapterData: String = ""
     
     init(title: String, relativeURL: String){
         self.title = title
@@ -29,32 +34,35 @@ public class NovelQuery: Identifiable, ObservableObject {
     
     // Core Data
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: Books.entity(), sortDescriptors: []) var book: FetchedResults<Books>
+    //@FetchRequest(entity: Books.entity()) var book: FetchedResults<Books>
     
     // Error enum
        enum ParseError: Error {
            case runtimeError(String)
        }
     
+    // Will be filled by functions
+    var error: Error?
+    // Get the novel's home page
+    var novelHomePage: String = "f"
+    // Get the last chapter currently
+    var latestChapter: Int16 = 0
+    // Mutable instance of an array of ChapterData.
+    var chaptersArray: [ChapterData] = []
+    
     // Constructor for websiteURL and relativeNovelURL
-    var websiteURL, relativeNovelURL: String
+    var websiteURL: String
+    var relativeNovelURL: String
     
     init(websiteURL: String, relativeNovelURL: String) {
         self.websiteURL = websiteURL
         self.relativeNovelURL = relativeNovelURL
     }
-    
-    // Will be filled by functions
-    var error: Error?
-    // Get the novel's home page
-    @State var novelHomePage: String = ""
-    // Get the last chapter currently
-    @State var latestChapter: Int16 = 0
-    // Mutable instance of an array of ChapterData.
-    var chaptersArray: [ChapterData] = []
-    
-    // A function that returns a novelHomePage and all of its data. Should always be called at least once
-    // before any other functions.
+}
+
+extension NovelQuery {
+    // A function that returns a novelHomePage and all of its data. Should always be called at least
+    // once before any other functions.
     func getNovelHomePage(){
         // Dispatch Group to wait for functions to complete
         let group = DispatchGroup()
@@ -67,14 +75,17 @@ public class NovelQuery: Identifiable, ObservableObject {
         
         // Create a session that we can use for this request
         let session = URLSession(configuration: .default)
-
+        print(1)
         // Create a task that will be responsible for downloading the index page.
         let task = session.dataTask(with: homePage, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
-           
+           print(2)
            // ensure we did not get an error
            guard error == nil else {
-                self.error = error
-                group.leave()
+                DispatchQueue.main.async {
+                    self.error = error
+                    group.leave()
+                    print(3)
+                }
                 return
             }
            
@@ -84,19 +95,27 @@ public class NovelQuery: Identifiable, ObservableObject {
                 (200...299).contains(httpResponse.statusCode) else {
                     self.error = ParseError.runtimeError("Status Code outside 200 - 299 range")
                     group.leave()
+                    print(4)
                     return
                 }
             // Make sure we received the data
+            print(00)
             if let receivedData = data {
-                DispatchQueue.main.async {
+                print(876)
+                //DispatchQueue.main.async {
+                    print(5)
                     self.novelHomePage = String(decoding: receivedData, as: UTF8.self)
+                    //print("\(self.novelHomePage).")
+                    //print(String(decoding: receivedData, as: UTF8.self))
                     group.leave()
-                }
+                //}
+                print(9)
             }
         })
         task.resume()
         
         group.wait()
+        print(87000)
         return
     }
     
@@ -110,7 +129,7 @@ public class NovelQuery: Identifiable, ObservableObject {
         group.enter()
         
         // Uses a global background thread to prevent the main thread from becoming inactive as this requires a bit of time to process
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // Do all parsing of the document for the desired info.
             do {
                 // Retrieve the panel where all the chapters are located.
@@ -174,6 +193,7 @@ public class NovelQuery: Identifiable, ObservableObject {
         return
     }
     
+    
     // A function that returns a single chapter page data based off the data received from getAllNovelChaptersURLS
     func downloadAllRawNovelChapters() -> Void{
         // Dispatch Group to wait for functions to complete
@@ -220,7 +240,7 @@ public class NovelQuery: Identifiable, ObservableObject {
         group.enter()
         
         // Uses a global background thread to prevent the main thread from becoming inactive as this requires a bit of time to process
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // Do all parsing of the document for the desired info.
             do {
                 // Retrieve the panel where all the chapters are located.
@@ -254,6 +274,7 @@ public class NovelQuery: Identifiable, ObservableObject {
         return
     }
     
+    
     // A function that returns all parsed chapters page data based off the data received from getAllNovelChaptersURLS
     func parseAllRawNovelChapters() -> Void{
         // Dispatch Group to wait for functions to complete
@@ -263,7 +284,7 @@ public class NovelQuery: Identifiable, ObservableObject {
         group.enter()
         
         // Uses a global background thread to prevent the main thread from becoming inactive as this requires a bit of time to process
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // Do all parsing of the document for the desired info.
             do {
                 for chapter in 0..<Int(self.latestChapter)
@@ -301,18 +322,22 @@ public class NovelQuery: Identifiable, ObservableObject {
         return
     }
     
+    
     func starter()
     {
         // Change "" later
         if self.novelHomePage == ""{
             self.getNovelHomePage()
-            self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
+            //self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
+            return
         }
         else if self.chaptersArray.isEmpty{
             self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
+            return
         }
-        return
+        
     }
+    
     
     func returnAllParsedChapters() -> [ChapterData]
     {
@@ -321,6 +346,7 @@ public class NovelQuery: Identifiable, ObservableObject {
         self.parseAllRawNovelChapters()
         return self.chaptersArray
     }
+    
     
     func returnOneParsedChapter(chosenChapter: Int) -> ChapterData
     {
