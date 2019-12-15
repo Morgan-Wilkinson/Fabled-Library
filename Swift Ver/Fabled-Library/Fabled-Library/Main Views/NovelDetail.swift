@@ -19,11 +19,11 @@ struct NovelDetail: View {
         novel.getNovelHomePage()
         novel.getAllChaptersURLS(novelHomePage: novel.novelHomePage)
         
-         return VStack(){
-            // Novel Data
-            BookGlance(novel: novelData, latestChapter: novel.latestChapter)
-            
-            NavigationView {
+         return NavigationView{
+                VStack(){
+                // Novel Data
+                BookGlance(novel: novelData, latestChapter: novel.latestChapter)
+
                 // Scroll and navigation view of the chapters
                 ChapterList(novel: novel, chapters: novel.chaptersArray)
             }

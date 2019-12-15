@@ -16,11 +16,9 @@ struct BookShelf: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            HStack(alignment: .center){
-                SideBar().environment(\.managedObjectContext, self.moc)
-            }
+            Text("I'm a bookshelf")
+                .frame(minWidth: 800, idealWidth: 2500, maxWidth: 3000, minHeight: 800, alignment: .center)
         }
-        .frame(minWidth: 800, idealWidth: 1000, maxWidth: 2500, minHeight: 600, idealHeight: 1000, maxHeight: 2500, alignment: .center)
     }
 }
 

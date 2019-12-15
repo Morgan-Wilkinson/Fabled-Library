@@ -16,6 +16,7 @@ struct Reader: View {
             .font(.body)
             .fontWeight(.light)
             .padding()
+            .frame(minWidth: 800, idealWidth: 2500, maxWidth: 3000, alignment: .center)
     }
 }
 

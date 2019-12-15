@@ -16,13 +16,19 @@ struct ChapterList: View {
     let columnNumber: Int = 2
     
     var body: some View {
-        HStack(){
-            List (){
-                HelperListView(rows: chapters.count/rowNumber, cols: columnNumber) { row, column in
-                    ChapterListElement(novelquery: self.novel, index: (row * self.rowNumber + column), chapter: self.chapters[row * self.rowNumber + column])
-                }
-            }.frame(minWidth: 800, idealWidth: 2500, maxWidth: 3000, alignment: .center)
-            
-        }
+        List (){
+            HelperListView(rows: chapters.count/rowNumber, cols: columnNumber) { row, column in
+               // ChapterListElement(novelquery: self.novel, index: (row * self.rowNumber + column), chapter: self.chapters[row * self.rowNumber + column])
+                NavigationLink(destination: Reader(chapterText: self.novel.returnOneParsedChapter(chosenChapter: row * self.rowNumber + column))){
+                    Text("\(self.chapters[row * self.rowNumber + column].title)")
+                        .font(.subheadline)
+                        .fontWeight(.light)
+                        .foregroundColor(Color.black)
+                    }
+                .frame(maxWidth: .infinity, maxHeight: 150, alignment: .leading)
+                .padding()
+                .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
+            }
+        }.frame(minWidth: 800, idealWidth: 2500, maxWidth: 3000, alignment: .center)
     }
 }

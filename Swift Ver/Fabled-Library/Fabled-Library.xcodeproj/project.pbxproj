@@ -16,6 +16,7 @@
 		90980D97239CBA6400C689DD /* ChapterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90980D96239CBA6400C689DD /* ChapterList.swift */; };
 		90B0DE932391DBE0007022D0 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B0DE922391DBE0007022D0 /* SideBar.swift */; };
 		90B0DE98239212BB007022D0 /* Fabled-Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90B0DE96239212BB007022D0 /* Fabled-Library.xcdatamodeld */; };
+		90BB89E223A5E95F0027A0DE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB89E123A5E95F0027A0DE /* HomeView.swift */; };
 		90C079AC239DFF8D006B279E /* Reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C079AB239DFF8D006B279E /* Reader.swift */; };
 		90D8CE36237FCBF300ED3504 /* NovelQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D8CE35237FCBF300ED3504 /* NovelQuery.swift */; };
 		90DB7A7323765E5000EBD385 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DB7A7223765E5000EBD385 /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 		90980D96239CBA6400C689DD /* ChapterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterList.swift; sourceTree = "<group>"; };
 		90B0DE922391DBE0007022D0 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		90B0DE97239212BB007022D0 /* Fabled-Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fabled-Library.xcdatamodel"; sourceTree = "<group>"; };
+		90BB89E123A5E95F0027A0DE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		90C079AB239DFF8D006B279E /* Reader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reader.swift; sourceTree = "<group>"; };
 		90D8CE35237FCBF300ED3504 /* NovelQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovelQuery.swift; sourceTree = "<group>"; };
 		90DB7A6F23765E5000EBD385 /* Fabled-Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fabled-Library.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +107,7 @@
 			children = (
 				90DB7A932376638100EBD385 /* NovelDetail.swift */,
 				90DB7A7423765E5000EBD385 /* BookShelf.swift */,
+				90BB89E123A5E95F0027A0DE /* HomeView.swift */,
 			);
 			path = "Main Views";
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				9097D6C223897BFD0099FE6E /* BookGlance.swift in Sources */,
 				90DB7A96237663F500EBD385 /* NovelRow.swift in Sources */,
 				90DB7A7523765E5000EBD385 /* BookShelf.swift in Sources */,
+				90BB89E223A5E95F0027A0DE /* HomeView.swift in Sources */,
 				900500CB237762BA002CE3C5 /* UserData.swift in Sources */,
 				90C079AC239DFF8D006B279E /* Reader.swift in Sources */,
 				90DB7A7323765E5000EBD385 /* AppDelegate.swift in Sources */,

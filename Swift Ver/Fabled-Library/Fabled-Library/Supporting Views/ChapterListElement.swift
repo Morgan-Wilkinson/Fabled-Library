@@ -20,8 +20,7 @@ struct ChapterListElement: View {
                 .font(.subheadline)
                 .fontWeight(.light)
                 .foregroundColor(Color.black)
-        }
-       //.buttonStyle(PlainButtonStyle())
+            }
         .frame(maxWidth: .infinity, maxHeight: 150, alignment: .leading)
         .padding()
         .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
