@@ -15,7 +15,7 @@ struct Reader: View {
         Text(chapterText)
             .font(.body)
             .fontWeight(.light)
-            .padding() 
+            .padding()
     }
 }
 

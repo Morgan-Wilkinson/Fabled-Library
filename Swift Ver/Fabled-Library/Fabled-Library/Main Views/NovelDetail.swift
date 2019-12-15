@@ -19,28 +19,15 @@ struct NovelDetail: View {
         novel.getNovelHomePage()
         novel.getAllChaptersURLS(novelHomePage: novel.novelHomePage)
         
-        
-        return VStack(){
-            
+         return VStack(){
             // Novel Data
             BookGlance(novel: novelData, latestChapter: novel.latestChapter)
             
-            // Novel Synopsis Scroll View
-            BookSynopsis(novel: novelData)
-            
-            // Scroll and navigation view of the chapters
-            ChapterList(chapters: novel.chaptersArray)
+            NavigationView {
+                // Scroll and navigation view of the chapters
+                ChapterList(novel: novel, chapters: novel.chaptersArray)
+            }
         }
-    }
-    
-    // This function returns the number of rows and columns needed to show numberOfChapters
-    func rowsColsGroupingCal(numberOfChapter: Int) -> (Int, Int)
-    {
-        let columns:Double = 2
-        
-        var rows: Double = Double(numberOfChapter) / columns
-        rows.round(.up)
-        return (Int(rows), Int(columns))
     }
 }
 

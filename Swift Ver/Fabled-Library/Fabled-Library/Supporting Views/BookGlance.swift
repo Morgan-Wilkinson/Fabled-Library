@@ -8,6 +8,20 @@
 
 import SwiftUI
 
+struct BookSynopsis: View {
+    var novel: Novel
+    var body: some View {
+        // Novel Synopsis Data
+        VStack(alignment: .leading){
+           Text(novel.synopsis)
+               .font(.body)
+               .multilineTextAlignment(.leading)
+               .padding([.leading, .bottom, .trailing])
+        }
+        .frame(maxWidth: .infinity, maxHeight: 150, alignment: .center)
+    }
+}
+
 struct BookGlance: View {
     var novel: Novel
     var latestChapter: Int16
@@ -39,8 +53,8 @@ struct BookGlance: View {
                         Text("\nTranslator: \(novel.translator)")
                             .fontWeight(.bold)
                             .font(.callout)
-                            
                     }
+                    
                     // Novel Translator
                     Text("\nLatest Chapter: \(latestChapter)")
                         .fontWeight(.bold)
@@ -48,8 +62,10 @@ struct BookGlance: View {
                 }
             }
             .padding(.trailing)
+            
+        BookSynopsis(novel: self.novel)
         }
-        .frame(minWidth: 800, idealWidth: 800, maxWidth: 800, minHeight: 300, idealHeight: 300, maxHeight: 300, alignment: .leading)
+        //.frame(width: 800, height: 300, alignment: .leading)
     }
 }
 

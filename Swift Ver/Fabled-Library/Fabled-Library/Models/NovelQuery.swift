@@ -266,7 +266,7 @@ extension NovelQuery {
         let bookAdder = Books(context: self.moc)
         bookAdder.novelHomePage = self.novelHomePage
         bookAdder.latestChapter = self.latestChapter
-        bookAdder.chapters![desiredChapter] = self.chaptersArray[desiredChapter]
+        bookAdder.chapters?[desiredChapter] = self.chaptersArray[desiredChapter]
         try? self.moc.save()
         
         return
@@ -336,7 +336,8 @@ extension NovelQuery {
         
     }
     
-    
+    // This function calls the appropriate functions to return all the chapters of a novel.
+    // This function should be used to download all the chapters for offline viewing.
     func returnAllParsedChapters() -> [ChapterData]
     {
         starter()
@@ -345,8 +346,9 @@ extension NovelQuery {
         return self.chaptersArray
     }
     
-    
-    func returnOneParsedChapter(chosenChapter: Int) -> ChapterData
+    // This function calls the appropriate functions to return just one chapter. This function
+    // should be used to jump straight to a chapter to output it for the user.
+    func returnOneParsedChapter(chosenChapter: Int) -> String
     {
         if self.chaptersArray.indices.contains(chosenChapter) == false{
             starter()
@@ -354,6 +356,6 @@ extension NovelQuery {
             self.parseOneRawNovelChapter(desiredChapter: chosenChapter)
         }
         
-        return self.chaptersArray[chosenChapter]
+        return self.chaptersArray[chosenChapter].parsedChapterData
     }
 }

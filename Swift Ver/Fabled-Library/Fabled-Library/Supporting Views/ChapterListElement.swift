@@ -9,26 +9,21 @@
 import SwiftUI
 
 struct ChapterListElement: View {
-    @EnvironmentObject private var userData: UserData
+    let novelquery: NovelQuery
+    let index: Int
     var chapter: ChapterData
     
+    
     var body: some View {
-       NavigationLink(destination: Reader(chapterText: chapter.parsedChapterData)){
-                Text("\(chapter.title)")
-                    .font(.subheadline)
-                    .fontWeight(.light)
-                    .foregroundColor(Color.black)
-       }
-       .buttonStyle(PlainButtonStyle())
-       .frame(maxWidth: 300, maxHeight: 150, alignment: .leading)
-       .padding()
-       .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
-    }
-}
-
-struct ChapterListElement_Previews: PreviewProvider {
-    static var previews: some View {
-        let test = ChapterData(title: "HI", relativeURL: "String")
-        return ChapterListElement(chapter: test)
+        NavigationLink(destination: Reader(chapterText: novelquery.returnOneParsedChapter(chosenChapter: index))){
+            Text("\(chapter.title)")
+                .font(.subheadline)
+                .fontWeight(.light)
+                .foregroundColor(Color.black)
+        }
+       //.buttonStyle(PlainButtonStyle())
+        .frame(maxWidth: .infinity, maxHeight: 150, alignment: .leading)
+        .padding()
+        .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
     }
 }

@@ -14,15 +14,14 @@ struct SideBar: View {
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
-            NavigationView{
-                List(novelData) { novel in
-                    NavigationLink(destination: NovelDetail(novelData: novel).environment(\.managedObjectContext, self.moc)) {
-                        NovelRow(novel: novel)
-                    }
-                }.listStyle(SidebarListStyle())
-                .frame(minWidth: 275, maxWidth: 275, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
-            }
-            
+        NavigationView{
+            List(novelData) { novel in
+                NavigationLink(destination: NovelDetail(novelData: novel).environment(\.managedObjectContext, self.moc)) {
+                    NovelRow(novel: novel)
+                }
+            }.listStyle(SidebarListStyle())
+            .frame(minWidth: 275, maxWidth: 275, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+        }
     }
 }
 
