@@ -127,6 +127,13 @@
 			path = "../../../Swift Ver macOS/Fabled-Library/Fabled-Library/Supporting Views";
 			sourceTree = "<group>";
 		};
+		90DBC64523B81C87004E3250 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		90ED085723AF1F330059B97E = {
 			isa = PBXGroup;
 			children = (
@@ -146,11 +153,12 @@
 		90ED086223AF1F330059B97E /* Fabled-Library */ = {
 			isa = PBXGroup;
 			children = (
+				90ED086723AF1F330059B97E /* Fabled_Library.xcdatamodeld */,
+				90DBC64523B81C87004E3250 /* Core Data */,
 				90ED086323AF1F330059B97E /* AppDelegate.swift */,
 				90ED086523AF1F330059B97E /* SceneDelegate.swift */,
 				90ED087123AF1F340059B97E /* LaunchScreen.storyboard */,
 				90ED087423AF1F340059B97E /* Info.plist */,
-				90ED086723AF1F330059B97E /* Fabled_Library.xcdatamodeld */,
 				90139C9B23AFC283006D596C /* Resources */,
 				90139C9723AFC283006D596C /* Main Views */,
 				90139C9F23AFC283006D596C /* Models */,

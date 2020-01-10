@@ -14,24 +14,13 @@ struct ChapterList: View {
     var chapters: [ChapterData]
     let rowNumber: Int = 2
     let columnNumber: Int = 2
-    @State private var isActive: Bool = false
     
     var body: some View {
-        ScrollView{
-            HelperListView(rows: self.chapters.count/self.rowNumber, cols: self.columnNumber) { row, column in
+        ScrollView{             //self.chapters.count
+            HelperListView(rows: 9/self.rowNumber, cols: self.columnNumber) { row, column in
                 ChapterListElement(novelQuery: self.novel, index: row * self.rowNumber + column, chapter: self.chapters)
                 }
                 
             }
         }
 }
-
-/*
- NavigationLink(destination: Reader(chapterText: self.novel.returnOneParsedChapter(chosenChapter: row * self.rowNumber + column))){
- Text("\(self.chapters[row * self.rowNumber + column].title)")
-     .font(.subheadline)
-     .fontWeight(.light)
-     .foregroundColor(Color.black)
- 
- 
- */

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Books" representedClassName=".Books" syncable="YES" codeGenerationType="class">
-        <attribute name="chapters" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[ChapterData]"/>
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="latestChapter" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="novelHomePage" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latestChapter" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="novelHomePage" optional="YES" attributeType="String"/>
+        <relationship name="bookToChapters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Chapters" inverseName="bookToChapters" inverseEntity="Chapters"/>
+    </entity>
+    <entity name="Chapters" representedClassName=".Chapters" syncable="YES" codeGenerationType="class">
+        <attribute name="chapterData" optional="YES" attributeType="String"/>
+        <relationship name="bookToChapters" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Books" inverseName="bookToChapters" inverseEntity="Books"/>
     </entity>
     <elements>
-        <element name="Books" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Books" positionX="-300.3515625" positionY="3792.20703125" width="128" height="118"/>
+        <element name="Chapters" positionX="-94.1640625" positionY="3779.48046875" width="128" height="73"/>
     </elements>
 </model>

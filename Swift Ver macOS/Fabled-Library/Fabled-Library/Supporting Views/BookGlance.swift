@@ -22,7 +22,6 @@ struct BookSynopsis: View {
 struct BookGlance: View {
     var novel: Novel
     var latestChapter: Int16
-    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack(alignment: .leading){

@@ -12,14 +12,18 @@ import SwiftUI
 struct NovelDetail: View {
     var novelData: Novel
     // Core Data
-    @Environment(\.managedObjectContext) var moc
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(entity: Books.entity(), sortDescriptors: []) var books: FetchedResults<Books>
     
     var body: some View {
         let novel = NovelQuery(websiteURL: novelData.websiteURL, relativeNovelURL: novelData.relativeURL)
-        novel.getNovelHomePage()
-        novel.getAllChaptersURLS(novelHomePage: novel.novelHomePage)
-        
+        ForEach(books, id: \.self) { book in
+            if book == novel.name
+            {
+                novel.starter(result: book)
+            }
+            else{novel.starter(result: nil)}
+        }
         return VStack(){
             ScrollView{
                 VStack{
@@ -29,6 +33,18 @@ struct NovelDetail: View {
                     ChapterList(novel: novel, chapters: novel.chaptersArray)
                 }
             }.navigationBarTitle("\(novelData.name)", displayMode: .inline)
+            .onAppear(perform: {
+                let bookAdder = Books(context: self.managedObjectContext)
+                bookAdder.id = UUID()
+                bookAdder.novelHomePage = novel.novelHomePage
+                bookAdder.latestChapter = Int16(novel.latestChapter)
+                do {
+                    try self.managedObjectContext.save()
+                } catch {
+                    // handle the Core Data error
+                    print("Error saving Book!")
+                }
+            })
         }
     }
 }

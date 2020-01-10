@@ -11,11 +11,10 @@ import Foundation
 import SwiftSoup
 import SwiftUI
 
-//                                    //
-// Make functions protocols of class //
-// cant mutate self
 
 
+
+/////// Also not NSManaged
 // Class that holds the chapter name and url
 public class ChapterData: NSObject {
     var title: String = ""
@@ -44,11 +43,11 @@ public class NovelQuery: Identifiable, ObservableObject {
     // Will be filled by functions
     var error: Error?
     // Get the novel's home page
-    var novelHomePage: String = "f"
+    @Published var novelHomePage: String = ""
     // Get the last chapter currently
-    var latestChapter: Int16 = 0
+    @Published var latestChapter: Int16 = 0
     // Mutable instance of an array of ChapterData.
-    var chaptersArray: [ChapterData] = []
+    @Published var chaptersArray: [ChapterData] = []
     
     // Constructor for websiteURL and relativeNovelURL
     var websiteURL: String
@@ -84,7 +83,6 @@ extension NovelQuery {
                 DispatchQueue.main.async {
                     self.error = error
                     group.leave()
-                    
                 }
                 return
             }
@@ -101,19 +99,25 @@ extension NovelQuery {
             // Make sure we received the data
             
             if let receivedData = data {
-                
-                //DispatchQueue.main.async {
-                    
-                    self.novelHomePage = String(decoding: receivedData, as: UTF8.self)
-                    //print("\(self.novelHomePage).")
-                    //print(String(decoding: receivedData, as: UTF8.self))
-                    group.leave()
-                //}
+                self.novelHomePage = String(decoding: receivedData, as: UTF8.self)
+           
+                group.leave()
             }
         })
         task.resume()
         
         group.wait()
+        /*
+        DispatchQueue.main.async {
+           let bookAdder = Books(context: self.managedObjectContext)
+           bookAdder.novelHomePage = self.novelHomePage
+           do {
+               try self.managedObjectContext.save()
+           } catch {
+               // handle the Core Data error
+               print("Error saving novelHomePage")
+           }
+       } */
         return
     }
     
@@ -150,10 +154,21 @@ extension NovelQuery {
            } catch {
                return
            }
-            // Explicitly refer to class member group
             group.leave()
         }
         group.wait()
+        /*
+        DispatchQueue.main.async {
+            let bookAdder = Books(context: self.managedObjectContext)
+            bookAdder.latestChapter = self.latestChapter as NSNumber
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                // handle the Core Data error
+                print("Error saving latestChapter")
+            }
+        }
+        */
         return
     }
     
@@ -251,6 +266,8 @@ extension NovelQuery {
                 chapterContent = chapterContent.replacingOccurrences(of: "\n", with: "\n\n")
                 chapterContent = chapterContent.replacingOccurrences(of: "<br>", with: "\n")
                 self.chaptersArray[desiredChapter].parsedChapterData = chapterContent
+                
+                
            }
             catch Exception.Error(let type, let message) {
                print("Type: \(type) and Message: \(message)")
@@ -263,17 +280,20 @@ extension NovelQuery {
         group.wait()
         
         // Core Data
-        let bookAdder = Books(context: self.managedObjectContext)
-        bookAdder.novelHomePage = self.novelHomePage
-        bookAdder.latestChapter = self.latestChapter
-        bookAdder.chapters?[desiredChapter] = self.chaptersArray[desiredChapter]
-        do {
-            try self.managedObjectContext.save()
-        } catch {
-            // handle the Core Data error
-            print("Error saving")
-        }
-        
+        /*DispatchQueue.main.async {
+            let bookAdder = Books(context: self.managedObjectContext)
+            bookAdder.id = UUID()
+            bookAdder.novelHomePage = self.novelHomePage
+            bookAdder.chapters?[desiredChapter] = self.chaptersArray[desiredChapter]
+            bookAdder.latestChapter = self.latestChapter as NSNumber
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                // handle the Core Data error
+                print("Error saving  chapters in parseOne")
+            }
+        //}
+ */
         return
     }
     
@@ -315,37 +335,43 @@ extension NovelQuery {
         }
         group.wait()
         
-        // Core Data
-        let bookAdder = Books(context: self.managedObjectContext)
-        bookAdder.novelHomePage = self.novelHomePage
-        bookAdder.latestChapter = self.latestChapter
-        bookAdder.chapters = self.chaptersArray
-        try? self.managedObjectContext.save()
-        
+        /*/ Core Data
+        DispatchQueue.main.async {
+            let bookAdder = Books(context: self.managedObjectContext)
+            bookAdder.id = UUID()
+            bookAdder.novelHomePage = self.novelHomePage
+            bookAdder.latestChapter = self.latestChapter as NSNumber
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                // handle the Core Data error
+                print("Error saving  chapters in parseALL")
+            }
+        }*/
         return
     }
     
     
-    func starter()
+    func starter(result: FetchedResults<Books>)
     {
         // Change "" later
-        if self.novelHomePage == ""{
+       // if self.novelHomePage == ""{
+        if book.novelHomePage == nil{
             self.getNovelHomePage()
             //self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
-            return
+            //return
         }
-        else if self.chaptersArray.isEmpty{
+        if self.chaptersArray.isEmpty{
             self.getAllChaptersURLS(novelHomePage: self.novelHomePage)
-            return
+            
         }
-        
+        return
     }
     
     // This function calls the appropriate functions to return all the chapters of a novel.
     // This function should be used to download all the chapters for offline viewing.
     func returnAllParsedChapters() -> [ChapterData]
     {
-        starter()
         self.downloadAllRawNovelChapters()
         self.parseAllRawNovelChapters()
         return self.chaptersArray
@@ -355,12 +381,14 @@ extension NovelQuery {
     // should be used to jump straight to a chapter to output it for the user.
     func returnOneParsedChapter(chosenChapter: Int) -> String
     {
-        if self.chaptersArray.indices.contains(chosenChapter) == false{
-            starter()
+        //if self.chaptersArray.indices.contains(chosenChapter) == false{
+          //  starter()
             self.downloadOneRawNovelChapter(desiredChapter: chosenChapter)
             self.parseOneRawNovelChapter(desiredChapter: chosenChapter)
-        }
+        //}
         
         return self.chaptersArray[chosenChapter].parsedChapterData
     }
 }
+
+// Edit returnOneParsedChapter so that it checks the@Fetch request for a chapter first.

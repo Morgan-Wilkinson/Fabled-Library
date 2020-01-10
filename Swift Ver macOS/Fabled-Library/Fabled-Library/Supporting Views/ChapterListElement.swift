@@ -7,12 +7,13 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ChapterListElement: View {
     let novelQuery: NovelQuery
     let index: Int
     var chapter: [ChapterData]
-    
+    @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
         NavigationLink(destination: Reader(chapterText: novelQuery.returnOneParsedChapter(chosenChapter: index))){
@@ -25,5 +26,6 @@ struct ChapterListElement: View {
         .frame(width: 165, height: 40, alignment: .leading)
         .padding()
         .overlay(Rectangle().stroke(Color.gray, lineWidth: 1))
+        
     }
 }

@@ -10,15 +10,13 @@ import SwiftUI
 
 struct Reader: View {
     var chapterText: String
-    @Environment(\.presentationMode) var presentationMode
-    
     var body: some View {
-        NavigationView{
-            VStack{
-                Text(chapterText)
-                    .font(.body)
-                    .fontWeight(.light)
-                    .padding()
+        VStack{
+            ScrollView{
+            Text(chapterText)
+                .font(.body)
+                .fontWeight(.light)
+                .padding()
             }
         }
     }

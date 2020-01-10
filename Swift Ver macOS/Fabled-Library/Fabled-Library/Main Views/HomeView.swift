@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
-    
     var body: some View {
         NavigationView{
             SideBar()
