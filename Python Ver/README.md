@@ -14,7 +14,7 @@ For users on MacOS simply download the DMG file open it and simply drag the app 
 <a href="Source Code/dist/Fabled Library 1.0.zip" download>Download Fabled Library ver 1.0!</a>
 
 Download the file and double click it to open it.
-![Download the dmg file and double click it to open it](/Images/1.png)
+![Download the dmg file and double click it to open it](/Images/1.png.cloud)
 
 Drag the app into the Applications folder.
 ![Drag and drop](Images/2.png)
