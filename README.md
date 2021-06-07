@@ -17,10 +17,10 @@ Download the file and double click it to open it.
 ![Download the dmg file and double click it to open it]
 
 Drag the app into the Applications folder.
-![Drag and drop](/Python Ver/Images/2.png)
+![Drag and drop](/Python\Ver/Images/2.png)
 
 You're done! Go ahead and enjoy the app.
-![Enjoy](/Python Ver/Images/3.png)
+![Enjoy](/Python\Ver/Images/3.png)
 
 <a href="Source Code/dist/Fabled Library 1.0.zip" download>Download Fabled Library ver 1.0!</a>
 
